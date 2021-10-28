@@ -48,7 +48,7 @@ pub struct Initialize<'info> {
     ///
     /// `seeds` and `bump` tell us that our `vote_account` is a PDA that can be derived from their respective values
     /// Account<'info, VotingState> tells us that it should be deserialized to the VotingState struct defined below at #[account]
-    #[account(init, seeds = [b"vote_account".as_ref()], bump = vote_account_bump, payer = user)]
+    #[account(init, seeds = [b"change_account".as_ref()], bump = vote_account_bump, payer = user)]
     vote_account: Account<'info, VotingState>,
     user: Signer<'info>,
     system_program: Program<'info, System>,
@@ -56,7 +56,7 @@ pub struct Initialize<'info> {
 
 #[derive(Accounts)]
 pub struct Vote<'info> {
-    #[account(mut, seeds = [b"vote_account".as_ref()], bump = vote_account.bump)]
+    #[account(mut, seeds = [b"change_account".as_ref()], bump = vote_account.bump)]
     vote_account: Account<'info, VotingState>,
 }
 

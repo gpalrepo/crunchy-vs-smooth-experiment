@@ -64,7 +64,7 @@ function AppWrappedWithProviders() {
       let account,
         accountBump = null;
       [account, accountBump] = await web3.PublicKey.findProgramAddress(
-        [Buffer.from("vote_account")],
+        [Buffer.from("change_account")], //Need to change to user's PDA 
         programID
       );
       setVoteAccount({ account, accountBump });

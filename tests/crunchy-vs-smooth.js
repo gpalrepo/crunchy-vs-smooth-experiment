@@ -11,8 +11,9 @@ describe("crunchy-vs-smooth", () => {
   let voteAccount, voteAccountBump;
   before(async () => {
     [voteAccount, voteAccountBump] =
+    // Need to switch this to user's PDA
       await anchor.web3.PublicKey.findProgramAddress(
-        [Buffer.from("vote_account")],
+        [Buffer.from("change_account")],
         program.programId
       );
   });
@@ -21,7 +22,7 @@ describe("crunchy-vs-smooth", () => {
     await program.rpc.initialize(new anchor.BN(voteAccountBump), {
       accounts: {
         user: provider.wallet.publicKey,
-        voteAccount: voteAccount,
+        voteAccount: voteAccount, //Note this is a public key
         systemProgram: anchor.web3.SystemProgram.programId,
       },
     });
