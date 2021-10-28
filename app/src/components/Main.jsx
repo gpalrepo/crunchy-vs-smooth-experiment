@@ -35,6 +35,8 @@ export default function Main({ voteAccount, voteAccountBump, network }) {
       const provider = new Provider(connection, wallet, preflightCommitment);
       const program = new Program(idl, programID, provider);
       try {
+        // Ok, this is how we retrieve data.
+        // Can we pull this data from user's PDA
         const account = await program.account.votingState.fetch(voteAccount);
         setVotes({
           crunchy: account.crunchy?.toNumber(),
