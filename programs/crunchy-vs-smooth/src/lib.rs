@@ -48,7 +48,7 @@ pub struct Initialize<'info> {
     ///
     /// `seeds` and `bump` tell us that our `vote_account` is a PDA that can be derived from their respective values
     /// Account<'info, VotingState> tells us that it should be deserialized to the VotingState struct defined below at #[account]
-    #[account(init, seeds = [b"change_account".as_ref()], bump = vote_account_bump, payer = user)]
+    #[account(init, seeds = [user.key().as_ref(), b"vote_account".as_ref()], bump = vote_account_bump, payer = user)]
     vote_account: Account<'info, VotingState>,
     user: Signer<'info>,
     system_program: Program<'info, System>,
@@ -56,8 +56,10 @@ pub struct Initialize<'info> {
 
 #[derive(Accounts)]
 pub struct Vote<'info> {
-    #[account(mut, seeds = [b"change_account".as_ref()], bump = vote_account.bump)]
+    #[account(mut, seeds = [user.key().as_ref(), b"vote_account".as_ref()], bump = vote_account.bump)]
     vote_account: Account<'info, VotingState>,
+    user: Signer<'info>, //New intervention
+
 }
 
 /// Here we define what what the state of our `vote_account` looks like
@@ -66,8 +68,9 @@ pub struct Vote<'info> {
 /// `bump` will store the `vote_account_bump` we passed in when we initialized our program
 /// This `bump` combined with our static "vote_account" seed will make it easy for anyone to derive the same PDA we use use to keep track of our state
 /// All of this will be passed inside each Transaction Instruction to record votes as they occur
+// #[derive(Default)] //Question: Would this be an issue? 
 #[account]
-#[derive(Default)]
+#[derive(Default)] 
 pub struct VotingState {
     crunchy: u64,
     smooth: u64,
