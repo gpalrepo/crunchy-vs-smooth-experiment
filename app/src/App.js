@@ -70,7 +70,7 @@ function AppWrappedWithProviders() {
       setVoteAccount({ account, accountBump });
     };
     getVoteAccount();
-  }, []);
+  }, []); 
 
   const onWalletError = useCallback(
     (error) => {
